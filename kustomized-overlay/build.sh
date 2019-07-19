@@ -1,0 +1,1 @@
+kustomize build > result.yaml

@@ -1,0 +1,4 @@
+commonLabels:
+  app: gs-prom-op
+resources:
+- prometheus-operator-with-values.yaml

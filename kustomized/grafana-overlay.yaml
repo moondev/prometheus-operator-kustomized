@@ -1,0 +1,6 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  labels:
+    chart: grafana-3.3.10
+  name: release-name-grafana

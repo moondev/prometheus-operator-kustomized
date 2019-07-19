@@ -1,0 +1,1 @@
+helm template --values values.yaml ./prometheus-operator > kustomized/prometheus-operator-with-values.yaml

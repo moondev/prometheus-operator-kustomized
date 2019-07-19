@@ -1,0 +1,46 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: release-name-grafana
+  labels:
+    app: grafana
+spec:
+  template:
+    spec:
+      initContainers:
+        - name: grafana-sc-datasources
+          image: "chadmoon/k8s-sidecar:0.0.16"
+      containers:
+        - name: grafana-sc-dashboard
+          image: "chadmoon/k8s-sidecar:0.0.16"
+        - name: grafana
+          image: "chadmoon/grafana:6.2.0"
+---
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: release-name-prometheus-node-exporter
+  labels:     
+    app: prometheus-node-exporter
+spec:
+  selector:
+    matchLabels:
+      app: prometheus-node-exporter
+  template:
+    spec:
+      containers:
+        - name: node-exporter
+          image: "chadmoon/node-exporter:v0.18.0"
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: release-name-grafana-test
+spec:
+  serviceAccountName: release-name-grafana-test
+  initContainers:
+    - name: test-framework
+      image: "chadmoon/bats:0.4.0"
+  containers:
+    - name: release-name-test
+      image: "chadmoon/bats:0.4.0"
